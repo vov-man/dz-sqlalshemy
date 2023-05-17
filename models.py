@@ -22,7 +22,7 @@ class Book(Base):
 
     id = sq.Column(sq.Integer, primary_key=True)
     title = sq.Column(sq.Text, nullable=False)
-    publisher_id = sq.Column(sq.Integer, sq.ForeignKey("publisher.id"), nullable=False)
+    id_publisher = sq.Column(sq.Integer, sq.ForeignKey("publisher.id"), nullable=False)
 
     #publisher = relationship(Publisher, back_populates="books")
     publisher = relationship(Publisher, backref="book")
@@ -41,17 +41,17 @@ class Sale(Base):
     __tablename__ = "sale"
 
     id = sq.Column(sq.Integer, primary_key=True)
-    price = sq.Column(sq.Integer, nullable=False)
-    date_sale = sq.Column(sq.Integer, nullable=False)
-    stock_id = sq.Column(sq.Integer, sq.ForeignKey("stock.id"), nullable=False)
+    price = sq.Column(sq.Float, nullable=False)
+    date_sale = sq.Column(sq.Date, nullable=False)
+    id_stock = sq.Column(sq.Integer, sq.ForeignKey("stock.id"), nullable=False)
     count = sq.Column(sq.Integer, nullable=False)
-
-    # course = relationship(Course, back_populates="homeworks")
     stock = relationship(Stock,backref="sale")
 
 
 
 
 def create_tables(engine):
-    # Base.metadata.drop_all(engine)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
+    
+    
